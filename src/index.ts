@@ -1,3 +1,4 @@
+import { calculateDistance } from "./helpers.js";
 class Game {
   points: number;
   constructor(points = 100) {
@@ -6,4 +7,4 @@ class Game {
 }
 
 const game = new Game();
-console.log(game);
+console.log(calculateDistance(10, 2));
