@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "server": "live-server --open=public/index.html",
-    "serve": "webpack --watch & webpack-dev-server ",
+    "start": "live-server --open=public/index.html",
+    "serve": "webpack --watch",
     "build": "webpack"
   },
   "keywords": [],

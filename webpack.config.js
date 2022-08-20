@@ -1,6 +1,8 @@
 const path = require("path");
 module.exports = {
-  entry: "/src/index.ts",
+  resolve: {
+    extensions: [".js", ".ts"],
+  },
   module: {
     rules: [
       {
@@ -10,6 +12,7 @@ module.exports = {
       },
     ],
   },
+  entry: "/src/index.ts",
   output: {
     publicPath: "public",
     filename: "bundle.js",
