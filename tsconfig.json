@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
+    "moduleResolution": "node",
     "rootDir": "src",
-    "outDir": "dist",
+    "outDir": "public",
     "noImplicitAny": true,
     "removeComments": true,
     "preserveConstEnums": true,
