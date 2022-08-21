@@ -40,9 +40,9 @@ export class AppManager {
       Object.keys(resources.tileset.data.frames).forEach((key: string) => {
         this.foodTextures.push(Texture.from(key));
       });
-      this.playerTextures.front(Texture.from("heroFront"));
-      this.playerTextures.left(Texture.from("heroRunLeft"));
-      this.playerTextures.right(Texture.from("heroRunRight"));
+      this.playerTextures.front = Texture.from("heroFront");
+      this.playerTextures.left = Texture.from("heroRunLeft");
+      this.playerTextures.right = Texture.from("heroRunRight");
     });
     loader.onComplete.add(() => {
       this.game = new Game(this.app.stage, this.foodTextures);
