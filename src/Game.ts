@@ -3,7 +3,7 @@ import { Food } from "./Food";
 import { calculateDistance } from "./helpers";
 import { Hero } from "./Hero";
 import { KeysController } from "./KeysController";
-import { GameSettings } from "./models/GameSettings";
+import { GameSettings } from "./GameSettings";
 
 export class Game {
   settings: GameSettings;
