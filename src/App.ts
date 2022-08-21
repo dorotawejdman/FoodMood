@@ -5,6 +5,7 @@ import { Panel } from "./Panel";
 export class AppManager {
   app: Application;
   foodTextures: Texture[];
+  playerTextures: any;
   game: Game;
   loopStepId: number;
   panel: Panel;
@@ -38,7 +39,9 @@ export class AppManager {
       Object.keys(resources.tileset.data.frames).forEach((key: string) => {
         this.foodTextures.push(Texture.from(key));
       });
-      console.log(resources);
+      this.playerTextures.front(Texture.from("heroFront"));
+      this.playerTextures.left(Texture.from("heroRunLeft"));
+      this.playerTextures.right(Texture.from("heroRunRight"));
     });
     loader.onComplete.add(() => {
       this.game = new Game(this.app.stage, this.foodTextures);
