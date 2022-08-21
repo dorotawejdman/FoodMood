@@ -1,4 +1,4 @@
-import { Application, Loader, Sprite, Texture } from "pixi.js";
+import { Application, Loader, Texture } from "pixi.js";
 import { Game } from "./Game";
 
 export class AppManager {
@@ -37,20 +37,14 @@ export class AppManager {
     });
   }
 
+  checkFoodsPositions() {
+    
+  }
+
   loop(step: any) {
     this.loopStepId += 1;
-    this.game.handlePlayerMove();
-    if (this.game.foodContainer) {
-      if (this.loopStepId % this.game.foodDropFreq == 0) {
-        this.game.createFood();
-      }
-      this.game.moveFoods();
-    }
-    //co 10 obiektow zwieksz level
-    if (this.loopStepId % (this.game.foodDropFreq * this.game.dropsPerLevel) == 0) {
-      this.game.levelUp();
-    }
-
+    this.game.tick(this.loopStepId);
+    this.checkFoodsPositions()
     //TBD - remove sprite and life point when position.y>window.innerHeight
     //TBD - add point when position is near the hero
   }
