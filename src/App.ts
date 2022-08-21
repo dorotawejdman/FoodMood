@@ -1,11 +1,13 @@
 import { Application, Loader, Texture } from "pixi.js";
 import { Game } from "./Game";
+import { Panel } from "./Panel";
 
 export class AppManager {
   app: Application;
   foodTextures: Texture[];
   game: Game;
   loopStepId: number;
+  panel: Panel;
 
   public constructor() {
     this.loopStepId = 0;
@@ -17,8 +19,11 @@ export class AppManager {
     this.app.renderer.resize(window.innerWidth, window.innerHeight);
     this.app.renderer.view.style.position = "absolute";
     this.app.renderer.backgroundColor = 0x2e2532;
+    this.panel = new Panel();
+    this.app.stage.addChild(this.panel.panelContainer);
     document.body.appendChild(this.app.view);
     this.loadAssets();
+    this.createPanel();
     //Create on new game - button click
   }
 
@@ -37,14 +42,19 @@ export class AppManager {
     });
   }
 
-  checkFoodsPositions() {
-    
+  createPanel() {}
+
+  updatePanel(scoreValue: number, HPvalue: number) {
+    this.panel.HPValue.text = this.game.hp;
+    this.panel.scoreValue.text = this.game.score;
   }
+
+  startGame() {}
 
   loop(step: any) {
     this.loopStepId += 1;
     this.game.tick(this.loopStepId);
-    this.checkFoodsPositions()
+    this.updatePanel(this.game.score, this.game.hp);
     //TBD - remove sprite and life point when position.y>window.innerHeight
     //TBD - add point when position is near the hero
   }
