@@ -1,20 +1,21 @@
+import { Position } from "./models/Position";
 import { TextStyle, Text } from "pixi.js";
 
-export const calculateDistance = (objectA: number, objectB: number) => {
-  return objectA - objectB;
+export const calculateDistance = (objectA: Position, objectB: Position) => {
+  return Math.sqrt((objectA.x - objectB.x) ** 2 + (objectA.y - objectB.y) ** 2);
 };
 
-export const addTitle = (): Text => {
+export const createText = (content: string = "", fontSize: number = 45, x: number = window.innerWidth / 2, y: number = 10): Text => {
   const style = new TextStyle({
     fontFamily: "Montserrat",
-    fontSize: 45,
+    fontSize: fontSize,
     fill: 0xdddddd,
     align: "center",
   });
-  const text = new Text("FOOD MOOD", style);
+  const text = new Text(content, style);
   text.anchor.x = 0.5;
-  text.position.x = window.innerWidth / 2;
-  text.position.y = 10;
+  text.position.x = x;
+  text.position.y = y;
   return text;
 };
 
