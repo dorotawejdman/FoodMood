@@ -29,6 +29,7 @@ export class AppManager {
 
   loadAssets() {
     this.foodTextures = [];
+    this.playerTextures = {};
     const loader = new Loader();
     loader.add("tileset", "assets/Food/spritesheet.json");
     loader
