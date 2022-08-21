@@ -1,6 +1,6 @@
-import { Container, ParticleContainer, Sprite, Texture } from "pixi.js";
+import { Container, Texture } from "pixi.js";
 import { Food } from "./Food";
-import { calculateDistance, getRandomNumber, getRandomXPosition } from "./helpers";
+import { calculateDistance } from "./helpers";
 import { Hero } from "./Hero";
 import { KeysController } from "./KeysController";
 import { GameSettings } from "./models/GameSettings";
@@ -16,7 +16,7 @@ export class Game {
   foodContainer: Container;
   hp: number;
 
-  constructor(stage: Container, foodTextures: Texture[], settings = new GameSettings(), hp: number = 10) {
+  constructor(stage: Container, foodTextures: Texture[], settings = new GameSettings()) {
     //TBD - update constructor remove fixed values
     this.settings = settings;
     this.hp = settings.startHP;

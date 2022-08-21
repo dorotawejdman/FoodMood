@@ -1,6 +1,5 @@
 import { Sprite, Texture } from "pixi.js";
 import { getRandomNumber, getRandomXPosition } from "./helpers";
-import { Position } from "./models/Position";
 import * as PIXI from "pixi.js";
 
 export class Food extends Sprite {
