@@ -20,8 +20,7 @@ export class AppManager {
     this.app.renderer.view.style.position = "absolute";
     this.app.renderer.backgroundColor = 0x2e2532;
     this.panel = new Panel();
-    this.app.stage.addChild(this.panel.panelContainer);
-    document.body.appendChild(this.app.view);
+    this.createPanel();
     this.loadAssets();
     this.createPanel();
     //Create on new game - button click
@@ -30,19 +29,22 @@ export class AppManager {
   loadAssets() {
     this.foodTextures = [];
     const loader = new Loader();
-    loader.add("apple", "assets/Food/Apple.png").add("avocado", "assets/Food/Avocado.png").add("tomato", "assets/Food/Tomato.png").add("pineapple", "assets/Food/Pineapple.png");
+    loader.add("tileset", "assets/Food/spritesheet.json");
     loader.load((loader: any, resources: any) => {
-      this.foodTextures.push(resources.apple.texture);
-      this.foodTextures.push(resources.tomato.texture);
-      this.foodTextures.push(resources.avocado.texture);
-      this.foodTextures.push(resources.pineapple.texture);
-
+      Object.keys(resources.tileset.data.frames).forEach((key: string) => {
+        this.foodTextures.push(Texture.from(key));
+      });
+    });
+    loader.onComplete.add(() => {
       this.game = new Game(this.app.stage, this.foodTextures);
       this.app.ticker.add((step) => this.loop(step));
     });
   }
 
-  createPanel() {}
+  createPanel() {
+    this.app.stage.addChild(this.panel.panelContainer);
+    document.body.appendChild(this.app.view);
+  }
 
   updatePanel(scoreValue: number, HPvalue: number) {
     this.panel.HPValue.text = this.game.hp;
