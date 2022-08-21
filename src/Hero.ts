@@ -16,5 +16,20 @@ export class Hero extends Sprite {
     if (newXPosition < window.innerWidth - 20 && newXPosition > 20) {
       this.position.x = newXPosition;
     }
+    this.changeTexture(velocity);
+  }
+
+  changeTexture(velocitySign: number) {
+    switch (velocitySign) {
+      case 1:
+        console.log("1");
+        break;
+      case -1:
+        console.log("-1");
+        break;
+      case 0:
+        console.log("0");
+        break;
+    }
   }
 }

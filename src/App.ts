@@ -30,10 +30,15 @@ export class AppManager {
     this.foodTextures = [];
     const loader = new Loader();
     loader.add("tileset", "assets/Food/spritesheet.json");
+    loader
+      .add("heroFront", "assets/Hero/knight iso char_idle_0.png")
+      .add("heroRunLeft", "assets/Hero/knight iso char_run left_0.png")
+      .add("heroRunRight", "assets/Hero/knight iso char_run right_0.png");
     loader.load((loader: any, resources: any) => {
       Object.keys(resources.tileset.data.frames).forEach((key: string) => {
         this.foodTextures.push(Texture.from(key));
       });
+      console.log(resources);
     });
     loader.onComplete.add(() => {
       this.game = new Game(this.app.stage, this.foodTextures);
@@ -46,17 +51,12 @@ export class AppManager {
     document.body.appendChild(this.app.view);
   }
 
-  updatePanel(scoreValue: number, HPvalue: number) {
-    this.panel.HPValue.text = this.game.hp;
-    this.panel.scoreValue.text = this.game.score;
-  }
-
   startGame() {}
 
   loop(step: any) {
     this.loopStepId += 1;
     this.game.tick(this.loopStepId);
-    this.updatePanel(this.game.score, this.game.hp);
+    this.panel.updateValues(this.game.score, this.game.hp, this.game.level);
     //TBD - remove sprite and life point when position.y>window.innerHeight
     //TBD - add point when position is near the hero
   }
