@@ -3,7 +3,7 @@ import { DEFAULT_HERO_POSITION, DEFAULT_PLAYER_CATCH_RANGE } from "../composable
 import { Position } from "../models/Position";
 import { KeysController } from "./KeysController";
 
-export class Hero extends Sprite {
+export class Player extends Sprite {
   name: string;
   catchRange: number;
   keysController: KeysController;

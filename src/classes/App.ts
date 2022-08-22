@@ -58,6 +58,6 @@ export class AppManager {
     this.game.tick(this.loopStepId);
     this.panel.updateValues(this.game.score, this.game.hp, this.game.level);
     //TBD - remove sprite and life point when position.y>window.innerHeight
-    //TBD - add point when position is near the hero
+    //TBD - add point when position is near the Player
   }
 }

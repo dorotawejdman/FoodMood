@@ -3,10 +3,14 @@ export class KeysController {
   vel: number;
   leftKeyDown: boolean;
   rightKeyDown: boolean;
+  leftKeyName: string;
+  rightKeyName: string;
 
-  constructor(speed: number = 5) {
+  constructor(speed: number = 5, leftKeyName: string = "ArrowLeft", rightKeyName: string = "ArrowRight") {
     this.speed = speed;
     this.vel = 0;
+    this.leftKeyName = leftKeyName;
+    this.rightKeyName = rightKeyName;
     this.addListeners();
   }
 
@@ -15,10 +19,10 @@ export class KeysController {
       "keydown",
       function (e: KeyboardEvent) {
         switch (e.key) {
-          case "ArrowRight":
+          case this.rightKeyName:
             this.goRight();
             break;
-          case "ArrowLeft":
+          case this.leftKeyName:
             this.goLeft();
             break;
         }
@@ -30,10 +34,10 @@ export class KeysController {
       "keyup",
       function (e: KeyboardEvent) {
         switch (e.key) {
-          case "ArrowRight":
+          case this.rightKeyName:
             this.rightKeyDown = false;
             break;
-          case "ArrowLeft":
+          case this.leftKeyName:
             this.leftKeyDown = false;
             break;
         }

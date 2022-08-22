@@ -1,7 +1,7 @@
 import { Container, Texture } from "pixi.js";
 import { Food } from "./Food";
 import { calculateDistance } from "../composables/game-helpers";
-import { Hero } from "./Hero";
+import { Player } from "./Player";
 import { GameSettings } from "./GameSettings";
 import { DEFAULT_FOOD_DROP_PERIOD, DEFAULT_HERO_POSITION } from "../composables/Constants";
 
@@ -9,7 +9,7 @@ export class Game {
   settings: GameSettings;
   score: number;
   level: number;
-  player: Hero;
+  player: Player;
   foodTextures: Texture[];
   stage: Container;
   foodContainer: Container;
@@ -39,7 +39,7 @@ export class Game {
   }
 
   createPlayer() {
-    this.player = new Hero(Texture.from("assets/Hero/knight iso char_idle_0.png"), "Player1");
+    this.player = new Player(Texture.from("assets/Hero/knight iso char_idle_0.png"), "Player1");
     this.stage.addChild(this.player);
   }
 
