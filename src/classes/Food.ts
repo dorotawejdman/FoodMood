@@ -5,7 +5,7 @@ import { INV_ACCELERATION_COEF, WIDTH_RANGE_PER_LVL, FOOD_STARTING_Y_POS } from 
 
 export class Food extends Sprite {
   constructor(foodTextures: Texture<PIXI.Resource>[], level: number) {
-    const textureId = getRandomNumber(64);
+    const textureId = getRandomNumber(foodTextures.length);
     const foodStartPosition = { x: getRandomXPosition(level * WIDTH_RANGE_PER_LVL), y: FOOD_STARTING_Y_POS };
     super(foodTextures[textureId]);
     this.anchor.set(0.5);
