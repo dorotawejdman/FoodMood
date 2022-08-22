@@ -30,7 +30,6 @@ export class AppManager {
       this.app.ticker.add((step) => this.loop(step));
     });
     document.body.appendChild(this.app.view);
-    //Create on new game - button click
   }
 
   loadAssets() {
@@ -57,7 +56,5 @@ export class AppManager {
     this.loopStepId += 1;
     this.game.tick(this.loopStepId);
     this.panel.updateValues(this.game.score, this.game.hp, this.game.level);
-    //TBD - remove sprite and life point when position.y>window.innerHeight
-    //TBD - add point when position is near the Player
   }
 }

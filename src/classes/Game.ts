@@ -16,7 +16,6 @@ export class Game {
   hp: number;
 
   constructor(stage: Container, foodTextures: Texture[], settings = new GameSettings()) {
-    //TBD - update constructor remove fixed values
     this.settings = settings;
     this.hp = settings.startHP;
     this.level = 1;
