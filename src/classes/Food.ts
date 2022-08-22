@@ -4,7 +4,7 @@ import * as PIXI from "pixi.js";
 import { INV_ACCELERATION_COEF, WIDTH_RANGE_PER_LVL, FOOD_STARTING_Y_POS } from "../composables/Constants";
 
 export class Food extends Sprite {
-  constructor(foodTextures: Texture<PIXI.Resource>[], level: number) {
+  public constructor(foodTextures: Texture<PIXI.Resource>[], level: number) {
     const textureId = getRandomNumber(foodTextures.length);
     const foodStartPosition = { x: getRandomXPosition(level * WIDTH_RANGE_PER_LVL), y: FOOD_STARTING_Y_POS };
     super(foodTextures[textureId]);
@@ -13,7 +13,7 @@ export class Food extends Sprite {
     this.scale.set(2, 2);
   }
 
-  move(velocity: number = 1) {
+  public move(velocity: number = 1) {
     this.position.y += velocity + this.position.y / INV_ACCELERATION_COEF;
   }
 }

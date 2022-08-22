@@ -1,20 +1,32 @@
 export class KeysController {
-  speed: number;
-  vel: number;
-  leftKeyDown: boolean;
-  rightKeyDown: boolean;
-  leftKeyName: string;
-  rightKeyName: string;
+  private speed: number;
+  private _vel: number;
+  private _leftKeyDown: boolean;
+  private _rightKeyDown: boolean;
+  private leftKeyName: string;
+  private rightKeyName: string;
 
-  constructor(speed: number = 5, leftKeyName: string = "ArrowLeft", rightKeyName: string = "ArrowRight") {
+  public constructor(speed: number = 5, leftKeyName: string = "ArrowLeft", rightKeyName: string = "ArrowRight") {
     this.speed = speed;
-    this.vel = 0;
+    this._vel = 0;
     this.leftKeyName = leftKeyName;
     this.rightKeyName = rightKeyName;
     this.addListeners();
   }
 
-  addListeners() {
+  public get vel() {
+    return this._vel;
+  }
+
+  public get leftKeyDown() {
+    return this._leftKeyDown;
+  }
+
+  public get rightKeyDown() {
+    return this._rightKeyDown;
+  }
+
+  private addListeners() {
     document.addEventListener(
       "keydown",
       function (e: KeyboardEvent) {
@@ -46,13 +58,13 @@ export class KeysController {
     );
   }
 
-  goLeft() {
-    this.vel = -this.speed;
-    this.leftKeyDown = true;
+  private goLeft() {
+    this._vel = -this.speed;
+    this._leftKeyDown = true;
   }
 
-  goRight() {
-    this.vel = this.speed;
-    this.rightKeyDown = true;
+  private goRight() {
+    this._vel = this.speed;
+    this._rightKeyDown = true;
   }
 }

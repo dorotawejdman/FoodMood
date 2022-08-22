@@ -2,30 +2,34 @@ import { Container, Text } from "pixi.js";
 import { createText } from "../composables/text-helpers";
 
 export class Panel {
-  panelContainer: Container;
-  scoreValue: Text;
-  HPValue: Text;
-  levelValue: Text;
+  private _panelContainer: Container;
+  private _scoreValue: Text;
+  private _HPValue: Text;
+  private _levelValue: Text;
 
-  constructor() {
-    this.panelContainer = new Container();
+  public constructor() {
+    this._panelContainer = new Container();
     const scoreTitle = createText("Score:", 30, window.innerWidth - 200, 20);
-    this.panelContainer.addChild(scoreTitle);
-    this.scoreValue = createText("-", 30, window.innerWidth - 100, 20);
-    this.panelContainer.addChild(this.scoreValue);
+    this._panelContainer.addChild(scoreTitle);
+    this._scoreValue = createText("-", 30, window.innerWidth - 100, 20);
+    this._panelContainer.addChild(this._scoreValue);
     const HPTitle = createText("HP:", 30, window.innerWidth - 200, 60);
-    this.panelContainer.addChild(HPTitle);
-    this.HPValue = createText("-", 30, window.innerWidth - 100, 60);
-    this.panelContainer.addChild(this.HPValue);
+    this._panelContainer.addChild(HPTitle);
+    this._HPValue = createText("-", 30, window.innerWidth - 100, 60);
+    this._panelContainer.addChild(this._HPValue);
     const levelTitle = createText("level:", 30, window.innerWidth - 200, 100);
-    this.panelContainer.addChild(levelTitle);
-    this.levelValue = createText("-", 30, window.innerWidth - 100, 100);
-    this.panelContainer.addChild(this.levelValue);
+    this._panelContainer.addChild(levelTitle);
+    this._levelValue = createText("-", 30, window.innerWidth - 100, 100);
+    this._panelContainer.addChild(this._levelValue);
   }
 
-  updateValues(score: number, HP: number, level: number) {
-    this.HPValue.text = HP;
-    this.scoreValue.text = score;
-    this.levelValue.text = level;
+  public get panelContainer() {
+    return this._panelContainer;
+  }
+
+  public updateValues(score: number, HP: number, level: number) {
+    this._HPValue.text = HP;
+    this._scoreValue.text = score;
+    this._levelValue.text = level;
   }
 }
