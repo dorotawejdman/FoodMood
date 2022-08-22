@@ -9,6 +9,9 @@ export const getRandomNumber = (range: number): number => {
 };
 
 export const getRandomXPosition = (range: number): number => {
+  if (range > window.innerWidth) {
+    range = window.innerWidth;
+  }
   const margin = (window.innerWidth - range) / 2;
   return margin + Math.random() * range;
 };
