@@ -1,11 +1,11 @@
-import { Container } from "pixi.js";
+import { Container, Text } from "pixi.js";
 import { createText } from "../composables/text-helpers";
 
 export class Panel {
   panelContainer: Container;
-  scoreValue: any;
-  HPValue: any;
-  levelValue: any;
+  scoreValue: Text;
+  HPValue: Text;
+  levelValue: Text;
 
   constructor() {
     this.panelContainer = new Container();

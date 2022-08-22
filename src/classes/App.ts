@@ -41,7 +41,7 @@ export class AppManager {
       .add("heroFront", "assets/Hero/knight iso char_idle_0.png")
       .add("heroRunLeft", "assets/Hero/knight iso char_run left_0.png")
       .add("heroRunRight", "assets/Hero/knight iso char_run right_0.png");
-    this.loader.load((loader: any, resources: any) => {
+    this.loader.load((loader: Loader, resources: any) => {
       Object.keys(resources.tileset.data.frames).forEach((key: string) => {
         this.foodTextures.push(Texture.from(key));
       });
@@ -53,7 +53,7 @@ export class AppManager {
 
   startGame() {}
 
-  loop(step: any) {
+  loop(step: number) {
     this.loopStepId += 1;
     this.game.tick(this.loopStepId);
     this.panel.updateValues(this.game.score, this.game.hp, this.game.level);

@@ -10,7 +10,7 @@ export class Player extends Sprite {
   keysController: KeysController;
   playerTextures: PlayerTextures;
 
-  constructor(playerTextures: any, name: string, catchRange: number = DEFAULT_PLAYER_CATCH_RANGE, position: Position = DEFAULT_HERO_POSITION) {
+  constructor(playerTextures: PlayerTextures, name: string, catchRange: number = DEFAULT_PLAYER_CATCH_RANGE, position: Position = DEFAULT_HERO_POSITION) {
     super(playerTextures.front);
     this.playerTextures = playerTextures;
     this.anchor.set(0.5);
