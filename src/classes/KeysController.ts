@@ -47,10 +47,10 @@ export class KeysController {
       function (e: KeyboardEvent) {
         switch (e.key) {
           case this.rightKeyName:
-            this.rightKeyDown = false;
+            this._rightKeyDown = false;
             break;
           case this.leftKeyName:
-            this.leftKeyDown = false;
+            this._leftKeyDown = false;
             break;
         }
         e.preventDefault();
