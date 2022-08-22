@@ -4,6 +4,7 @@ import { calculateDistance } from "../composables/game-helpers";
 import { Player } from "./Player";
 import { GameSettings } from "./GameSettings";
 import { DEFAULT_FOOD_DROP_PERIOD, DEFAULT_HERO_POSITION } from "../composables/Constants";
+import { PlayerTextures } from "../models/PlayerTextures";
 
 export class Game {
   settings: GameSettings;
@@ -15,7 +16,7 @@ export class Game {
   foodContainer: Container;
   hp: number;
 
-  constructor(stage: Container, foodTextures: Texture[], settings = new GameSettings()) {
+  constructor(stage: Container, foodTextures: Texture[], playerTextures: PlayerTextures, settings = new GameSettings()) {
     this.settings = settings;
     this.hp = settings.startHP;
     this.level = 1;
@@ -23,7 +24,7 @@ export class Game {
     this.stage = stage;
     this.foodTextures = foodTextures;
     this.createFoodContainer();
-    this.createPlayer();
+    this.createPlayer(playerTextures);
     this.createFood();
   }
 
@@ -37,8 +38,8 @@ export class Game {
     this.stage.addChild(this.foodContainer);
   }
 
-  createPlayer() {
-    this.player = new Player(Texture.from("assets/Hero/knight iso char_idle_0.png"), "Player1");
+  createPlayer(playerTextures: PlayerTextures) {
+    this.player = new Player(playerTextures, "Player1");
     this.stage.addChild(this.player);
   }
 

@@ -1,3 +1,4 @@
+import { PlayerTextures } from "./../models/PlayerTextures";
 import { Sprite } from "pixi.js";
 import { DEFAULT_HERO_POSITION, DEFAULT_PLAYER_CATCH_RANGE } from "../composables/Constants";
 import { Position } from "../models/Position";
@@ -7,9 +8,11 @@ export class Player extends Sprite {
   name: string;
   catchRange: number;
   keysController: KeysController;
+  playerTextures: PlayerTextures;
 
-  constructor(texture: any, name: string, catchRange: number = DEFAULT_PLAYER_CATCH_RANGE, position: Position = DEFAULT_HERO_POSITION) {
-    super(texture);
+  constructor(playerTextures: any, name: string, catchRange: number = DEFAULT_PLAYER_CATCH_RANGE, position: Position = DEFAULT_HERO_POSITION) {
+    super(playerTextures.front);
+    this.playerTextures = playerTextures;
     this.anchor.set(0.5);
     this.position.set(position.x, position.y);
 
@@ -24,7 +27,7 @@ export class Player extends Sprite {
     if (newXPosition < window.innerWidth - 20 && newXPosition > 20) {
       this.position.x = newXPosition;
     }
-    this.changeTexture(velocity);
+    this.changeTexture(Math.sign(velocity));
   }
 
   handleMove() {
@@ -36,13 +39,10 @@ export class Player extends Sprite {
   changeTexture(velocitySign: number) {
     switch (velocitySign) {
       case 1:
-        console.log("1");
+        this.texture = this.playerTextures.right;
         break;
       case -1:
-        console.log("-1");
-        break;
-      case 0:
-        console.log("0");
+        this.texture = this.playerTextures.left;
         break;
     }
   }

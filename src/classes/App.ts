@@ -1,11 +1,12 @@
 import { Application, Loader, Texture } from "pixi.js";
+import { PlayerTextures } from "../models/PlayerTextures";
 import { Game } from "./Game";
 import { Panel } from "./Panel";
 
 export class AppManager {
   app: Application;
   foodTextures: Texture[];
-  playerTextures: any;
+  playerTextures: PlayerTextures;
   game: Game;
   loopStepId: number;
   panel: Panel;
@@ -26,7 +27,7 @@ export class AppManager {
     this.loader = new Loader();
     this.loadAssets();
     this.loader.onComplete.add(() => {
-      this.game = new Game(this.app.stage, this.foodTextures);
+      this.game = new Game(this.app.stage, this.foodTextures, this.playerTextures);
       this.app.ticker.add((step) => this.loop(step));
     });
     document.body.appendChild(this.app.view);
@@ -34,7 +35,7 @@ export class AppManager {
 
   loadAssets() {
     this.foodTextures = [];
-    this.playerTextures = {};
+    this.playerTextures = {} as PlayerTextures;
     this.loader.add("tileset", "assets/Food/spritesheet.json");
     this.loader
       .add("heroFront", "assets/Hero/knight iso char_idle_0.png")
