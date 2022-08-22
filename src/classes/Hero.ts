@@ -1,5 +1,5 @@
 import { Sprite } from "pixi.js";
-import { DEFAULT_PLAYER_CATCH_RANGE } from "../composables/Constants";
+import { DEFAULT_HERO_POSITION, DEFAULT_PLAYER_CATCH_RANGE } from "../composables/Constants";
 import { Position } from "../models/Position";
 import { KeysController } from "./KeysController";
 
@@ -8,7 +8,7 @@ export class Hero extends Sprite {
   catchRange: number;
   keysController: KeysController;
 
-  constructor(position: Position, texture: any, name: string, catchRange: number = DEFAULT_PLAYER_CATCH_RANGE) {
+  constructor(texture: any, name: string, catchRange: number = DEFAULT_PLAYER_CATCH_RANGE, position: Position = DEFAULT_HERO_POSITION) {
     super(texture);
     this.anchor.set(0.5);
     this.position.set(position.x, position.y);
