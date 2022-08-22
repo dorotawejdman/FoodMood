@@ -4,6 +4,7 @@ import { calculateDistance } from "../composables/game-helpers";
 import { Hero } from "./Hero";
 import { KeysController } from "./KeysController";
 import { GameSettings } from "./GameSettings";
+import { DEFAULT_FOOD_DROOP_PERIOD } from "../composables/Constants";
 
 export class Game {
   settings: GameSettings;
@@ -57,7 +58,8 @@ export class Game {
 
   levelUp() {
     this.level += 1;
-    this.settings.foodDropFreq += 10;
+    this.settings.foodDropPeriod += 10;
+    console.log(this.settings.foodDropPeriod);
   }
 
   removeHP() {
@@ -85,13 +87,13 @@ export class Game {
   tick(loopStepId: number) {
     this.handlePlayerMove();
     if (this.foodContainer) {
-      if (loopStepId % this.settings.foodDropFreq == 0) {
+      if (loopStepId % this.settings.foodDropPeriod == 0) {
         this.createFood();
       }
       this.moveFoods();
     }
     //co 10 obiektow zwieksz level
-    if (loopStepId % (this.settings.foodDropFreq * this.settings.dropsPerLevel) == 0) {
+    if (loopStepId % (this.settings.foodDropPeriod * this.settings.dropsPerLevel) == 0) {
       this.levelUp();
     }
     this.checkFoodsPositions();
@@ -101,7 +103,8 @@ export class Game {
     this.hp = this.settings.startHP;
     this.score = 0;
     this.level = 1;
-    //nie dziala resetowanie levellu
+    this.settings.foodDropPeriod = DEFAULT_FOOD_DROOP_PERIOD;
+    // Nie dziala resetowanie levelu
     console.log("Game over");
   }
 }

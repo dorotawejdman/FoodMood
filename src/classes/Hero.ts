@@ -1,5 +1,5 @@
 import { Sprite } from "pixi.js";
-import { Position } from "./models/Position";
+import { Position } from "../models/Position";
 
 export class Hero extends Sprite {
   name: string;
