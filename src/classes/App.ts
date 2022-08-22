@@ -9,6 +9,7 @@ export class AppManager {
   game: Game;
   loopStepId: number;
   panel: Panel;
+  loader: Loader;
 
   public constructor() {
     this.loopStepId = 0;
@@ -21,22 +22,26 @@ export class AppManager {
     this.app.renderer.view.style.position = "absolute";
     this.app.renderer.backgroundColor = 0x2e2532;
     this.panel = new Panel();
-    this.createPanel();
+    this.app.stage.addChild(this.panel.panelContainer);
+    this.loader = new Loader();
     this.loadAssets();
-    this.createPanel();
+    this.loader.onComplete.add(() => {
+      this.game = new Game(this.app.stage, this.foodTextures);
+      this.app.ticker.add((step) => this.loop(step));
+    });
+    document.body.appendChild(this.app.view);
     //Create on new game - button click
   }
 
   loadAssets() {
     this.foodTextures = [];
     this.playerTextures = {};
-    const loader = new Loader();
-    loader.add("tileset", "assets/Food/spritesheet.json");
-    loader
+    this.loader.add("tileset", "assets/Food/spritesheet.json");
+    this.loader
       .add("heroFront", "assets/Hero/knight iso char_idle_0.png")
       .add("heroRunLeft", "assets/Hero/knight iso char_run left_0.png")
       .add("heroRunRight", "assets/Hero/knight iso char_run right_0.png");
-    loader.load((loader: any, resources: any) => {
+    this.loader.load((loader: any, resources: any) => {
       Object.keys(resources.tileset.data.frames).forEach((key: string) => {
         this.foodTextures.push(Texture.from(key));
       });
@@ -44,15 +49,6 @@ export class AppManager {
       this.playerTextures.left = Texture.from("heroRunLeft");
       this.playerTextures.right = Texture.from("heroRunRight");
     });
-    loader.onComplete.add(() => {
-      this.game = new Game(this.app.stage, this.foodTextures);
-      this.app.ticker.add((step) => this.loop(step));
-    });
-  }
-
-  createPanel() {
-    this.app.stage.addChild(this.panel.panelContainer);
-    document.body.appendChild(this.app.view);
   }
 
   startGame() {}

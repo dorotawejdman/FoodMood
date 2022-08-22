@@ -1,6 +1,6 @@
 import { Container, Texture } from "pixi.js";
 import { Food } from "./Food";
-import { calculateDistance } from "./helpers";
+import { calculateDistance } from "../composables/game-helpers";
 import { Hero } from "./Hero";
 import { KeysController } from "./KeysController";
 import { GameSettings } from "./GameSettings";
@@ -69,14 +69,16 @@ export class Game {
 
   checkFoodsPositions() {
     const firstFood = this.foodContainer.children[0];
-    const distanceToPlayer = calculateDistance(this.player.position, firstFood.position);
-    const distanceToBottom = calculateDistance({ x: firstFood.position.x, y: window.innerHeight }, firstFood.position);
-    if (distanceToPlayer < 40) {
-      this.foodContainer.children.shift();
-      this.score += 1;
-    } else if (distanceToBottom < 40) {
-      this.foodContainer.children.shift();
-      this.removeHP();
+    if (firstFood) {
+      const distanceToPlayer = calculateDistance(this.player.position, firstFood.position);
+      const distanceToBottom = calculateDistance({ x: firstFood.position.x, y: window.innerHeight }, firstFood.position);
+      if (distanceToPlayer < 40) {
+        this.foodContainer.children.shift();
+        this.score += 1;
+      } else if (distanceToBottom < 40) {
+        this.foodContainer.children.shift();
+        this.removeHP();
+      }
     }
   }
 

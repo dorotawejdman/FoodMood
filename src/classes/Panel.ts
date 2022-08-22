@@ -1,5 +1,5 @@
 import { Container } from "pixi.js";
-import { createText } from "./helpers";
+import { createText } from "../composables/text-helpers";
 
 export class Panel {
   panelContainer: Container;

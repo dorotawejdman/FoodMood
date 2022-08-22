@@ -1,3 +1,3 @@
-import { AppManager } from "./App";
+import { AppManager } from "./classes/App";
 
 const app = new AppManager();

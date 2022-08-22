@@ -1,11 +1,12 @@
 import { Sprite, Texture } from "pixi.js";
-import { getRandomNumber, getRandomXPosition } from "./helpers";
+import { getRandomNumber, getRandomXPosition } from "../composables/game-helpers";
 import * as PIXI from "pixi.js";
+import { INV_ACCELERATION_COEF, WIDTH_RANGE_PER_LVL } from "../composables/Constants";
 
 export class Food extends Sprite {
   constructor(foodTextures: Texture<PIXI.Resource>[], level: number) {
     const textureId = getRandomNumber(64);
-    const foodStartPosition = { x: getRandomXPosition(level * 200), y: 100 };
+    const foodStartPosition = { x: getRandomXPosition(level * WIDTH_RANGE_PER_LVL), y: 100 };
     super(foodTextures[textureId]);
     this.anchor.set(0.5);
     this.position.x = foodStartPosition.x;
@@ -14,6 +15,6 @@ export class Food extends Sprite {
   }
 
   move(velocity: number = 1) {
-    this.position.y += velocity + this.position.y / 500;
+    this.position.y += velocity + this.position.y / INV_ACCELERATION_COEF;
   }
 }
