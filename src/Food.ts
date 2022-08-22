@@ -5,7 +5,7 @@ import * as PIXI from "pixi.js";
 export class Food extends Sprite {
   constructor(foodTextures: Texture<PIXI.Resource>[], level: number) {
     const textureId = getRandomNumber(64);
-    const foodStartPosition = { x: getRandomXPosition(level * 100), y: 100 };
+    const foodStartPosition = { x: getRandomXPosition(level * 200), y: 100 };
     super(foodTextures[textureId]);
     this.anchor.set(0.5);
     this.position.x = foodStartPosition.x;
@@ -14,6 +14,6 @@ export class Food extends Sprite {
   }
 
   move(velocity: number = 1) {
-    this.position.y += velocity;
+    this.position.y += velocity + this.position.y / 500;
   }
 }
