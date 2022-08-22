@@ -74,10 +74,10 @@ export class Game {
     if (firstFood) {
       const distanceToPlayer = calculateDistance(this.player.position, firstFood.position);
       const distanceToBottom = calculateDistance({ x: firstFood.position.x, y: window.innerHeight }, firstFood.position);
-      if (distanceToPlayer < 40) {
+      if (distanceToPlayer < this.player.catchRange) {
         this.foodContainer.children.shift();
         this.score += 1;
-      } else if (distanceToBottom < 40) {
+      } else if (distanceToBottom < this.player.catchRange) {
         this.foodContainer.children.shift();
         this.removeHP();
       }

@@ -1,14 +1,18 @@
 import { Sprite } from "pixi.js";
+import { DEFAULT_PLAYER_CATCH_RANGE } from "../composables/Constants";
 import { Position } from "../models/Position";
 
 export class Hero extends Sprite {
   name: string;
-  constructor(position: Position, texture: any, name: string) {
+  catchRange: number;
+  constructor(position: Position, texture: any, name: string, catchRange: number = DEFAULT_PLAYER_CATCH_RANGE) {
     super(texture);
     this.anchor.set(0.5);
-    this.name = name;
     this.position.x = position.x;
     this.position.y = position.y;
+
+    this.name = name;
+    this.catchRange = catchRange;
   }
 
   move(velocity: number) {
