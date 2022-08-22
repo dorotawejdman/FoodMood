@@ -4,7 +4,7 @@ import { calculateDistance } from "../composables/game-helpers";
 import { Hero } from "./Hero";
 import { KeysController } from "./KeysController";
 import { GameSettings } from "./GameSettings";
-import { DEFAULT_FOOD_DROOP_PERIOD } from "../composables/Constants";
+import { DEFAULT_FOOD_DROP_PERIOD } from "../composables/Constants";
 
 export class Game {
   settings: GameSettings;
@@ -58,7 +58,9 @@ export class Game {
 
   levelUp() {
     this.level += 1;
-    this.settings.foodDropPeriod += 10;
+    if (this.settings.foodDropPeriod > 60) {
+      this.settings.foodDropPeriod -= 10;
+    }
     console.log(this.settings.foodDropPeriod);
   }
 
@@ -92,8 +94,10 @@ export class Game {
       }
       this.moveFoods();
     }
+    console.log(loopStepId);
     //co 10 obiektow zwieksz level
-    if (loopStepId % (this.settings.foodDropPeriod * this.settings.dropsPerLevel) == 0) {
+    if (loopStepId % (DEFAULT_FOOD_DROP_PERIOD * this.settings.dropsPerLevel) == 0) {
+      console.log("LEVELUP\n", this.settings.foodDropPeriod * this.settings.dropsPerLevel, this.settings.foodDropPeriod);
       this.levelUp();
     }
     this.checkFoodsPositions();
@@ -103,7 +107,7 @@ export class Game {
     this.hp = this.settings.startHP;
     this.score = 0;
     this.level = 1;
-    this.settings.foodDropPeriod = DEFAULT_FOOD_DROOP_PERIOD;
+    this.settings.foodDropPeriod = DEFAULT_FOOD_DROP_PERIOD;
     // Nie dziala resetowanie levelu
     console.log("Game over");
   }
