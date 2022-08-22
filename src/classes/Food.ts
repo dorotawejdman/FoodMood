@@ -9,8 +9,7 @@ export class Food extends Sprite {
     const foodStartPosition = { x: getRandomXPosition(level * WIDTH_RANGE_PER_LVL), y: FOOD_STARTING_Y_POS };
     super(foodTextures[textureId]);
     this.anchor.set(0.5);
-    this.position.x = foodStartPosition.x;
-    this.position.y = foodStartPosition.y;
+    this.position.set(foodStartPosition.x, foodStartPosition.y);
     this.scale.set(2, 2);
   }
 

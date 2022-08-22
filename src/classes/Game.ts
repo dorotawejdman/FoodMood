@@ -2,7 +2,6 @@ import { Container, Texture } from "pixi.js";
 import { Food } from "./Food";
 import { calculateDistance } from "../composables/game-helpers";
 import { Hero } from "./Hero";
-import { KeysController } from "./KeysController";
 import { GameSettings } from "./GameSettings";
 import { DEFAULT_FOOD_DROP_PERIOD } from "../composables/Constants";
 
@@ -10,7 +9,6 @@ export class Game {
   settings: GameSettings;
   score: number;
   level: number;
-  keysController: KeysController;
   player: Hero;
   foodTextures: Texture[];
   stage: Container;
@@ -25,7 +23,6 @@ export class Game {
     this.score = 0;
     this.stage = stage;
     this.foodTextures = foodTextures;
-    this.keysController = new KeysController();
     this.createFoodContainer();
     this.createPlayer();
     this.createFood();
@@ -50,18 +47,15 @@ export class Game {
     this.foodContainer.children.forEach((food: Food) => food.move());
   }
 
-  handlePlayerMove() {
-    if ((this.keysController.leftKeyDown || this.keysController.rightKeyDown) && this.keysController.vel) {
-      this.player.move(this.keysController.vel);
-    }
-  }
-
   levelUp() {
     this.level += 1;
+    this.decreaseFoodPeriod();
+  }
+
+  decreaseFoodPeriod() {
     if (this.settings.foodDropPeriod > 60) {
       this.settings.foodDropPeriod -= 10;
     }
-    console.log(this.settings.foodDropPeriod);
   }
 
   removeHP() {
@@ -87,17 +81,16 @@ export class Game {
   }
 
   tick(loopStepId: number) {
-    this.handlePlayerMove();
+    this.player.handleMove();
+
     if (this.foodContainer) {
       if (loopStepId % this.settings.foodDropPeriod == 0) {
         this.createFood();
       }
       this.moveFoods();
     }
-    console.log(loopStepId);
     //co 10 obiektow zwieksz level
     if (loopStepId % (DEFAULT_FOOD_DROP_PERIOD * this.settings.dropsPerLevel) == 0) {
-      console.log("LEVELUP\n", this.settings.foodDropPeriod * this.settings.dropsPerLevel, this.settings.foodDropPeriod);
       this.levelUp();
     }
     this.checkFoodsPositions();
@@ -108,7 +101,6 @@ export class Game {
     this.score = 0;
     this.level = 1;
     this.settings.foodDropPeriod = DEFAULT_FOOD_DROP_PERIOD;
-    // Nie dziala resetowanie levelu
     console.log("Game over");
   }
 }
