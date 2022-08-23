@@ -4,13 +4,13 @@ import { Game } from "./Game";
 import { Panel } from "./Panel";
 
 export class AppManager {
-  app: Application;
-  foodTextures: Texture[];
-  playerTextures: PlayerTextures;
-  game: Game;
-  loopStepId: number;
-  panel: Panel;
-  loader: Loader;
+  private app: Application;
+  private foodTextures: Texture[];
+  private playerTextures: PlayerTextures;
+  private game: Game;
+  private loopStepId: number;
+  private panel: Panel;
+  private loader: Loader;
 
   public constructor() {
     this.loopStepId = 0;
@@ -33,7 +33,7 @@ export class AppManager {
     document.body.appendChild(this.app.view);
   }
 
-  loadAssets() {
+  private loadAssets() {
     this.foodTextures = [];
     this.playerTextures = {} as PlayerTextures;
     this.loader.add("tileset", "assets/Food/spritesheet.json");
@@ -51,9 +51,9 @@ export class AppManager {
     });
   }
 
-  startGame() {}
+  private startGame() {}
 
-  loop(step: number) {
+  private loop(step: number) {
     this.loopStepId += 1;
     this.game.tick(this.loopStepId);
     this.panel.updateValues(this.game.score, this.game.hp, this.game.level);

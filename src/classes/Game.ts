@@ -7,64 +7,75 @@ import { DEFAULT_FOOD_DROP_PERIOD, DEFAULT_HERO_POSITION, FOOD_DROP_PERIOD_STEP,
 import { PlayerTextures } from "../models/PlayerTextures";
 
 export class Game {
-  settings: GameSettings;
-  score: number;
-  level: number;
-  player: Player;
-  foodTextures: Texture[];
-  stage: Container;
-  foodContainer: Container;
-  hp: number;
+  private settings: GameSettings;
+  private _score: number;
+  private _level: number;
+  private _hp: number;
+  private player: Player;
+  private foodTextures: Texture[];
+  private stage: Container;
+  private foodContainer: Container;
 
   constructor(stage: Container, foodTextures: Texture[], playerTextures: PlayerTextures, settings = new GameSettings()) {
     this.settings = settings;
-    this.hp = settings.startHP;
-    this.level = 1;
-    this.score = 0;
+    this._hp = settings.startHP;
+    this._level = 1;
+    this._score = 0;
     this.stage = stage;
     this.foodTextures = foodTextures;
     this.createFoodContainer();
     this.createPlayer(playerTextures);
   }
+  get score() {
+    return this._score;
+  }
 
-  createFood() {
-    const food = new Food(this.foodTextures, this.level);
+  get level() {
+    return this._level;
+  }
+
+  get hp() {
+    return this._hp;
+  }
+
+  private createFood() {
+    const food = new Food(this.foodTextures, this._level);
     this.foodContainer.addChild(food);
   }
 
-  createFoodContainer() {
+  private createFoodContainer() {
     this.foodContainer = new Container();
     this.stage.addChild(this.foodContainer);
   }
 
-  createPlayer(playerTextures: PlayerTextures) {
+  private createPlayer(playerTextures: PlayerTextures) {
     this.player = new Player(playerTextures, "Player1");
     this.stage.addChild(this.player);
   }
 
-  decreaseFoodPeriod() {
+  private decreaseFoodPeriod() {
     if (this.settings.foodDropPeriod > MINIMUM_FOOD_DROP_PERIOD) {
       this.settings.foodDropPeriod -= FOOD_DROP_PERIOD_STEP;
     }
   }
 
-  levelUp() {
-    this.level += 1;
+  private levelUp() {
+    this._level += 1;
     this.decreaseFoodPeriod();
   }
 
-  removeHP() {
-    this.hp -= 1;
+  private removeHP() {
+    this._hp -= 1;
     if (this.hp == 0) {
       this.gameOver();
     }
   }
 
-  moveFoods() {
+  private moveFoods() {
     this.foodContainer.children.forEach((food: Food) => food.move());
   }
 
-  handleFoods(loopStepId: number) {
+  private handleFoods(loopStepId: number) {
     const isTimeForFoodDrop = loopStepId % this.settings.foodDropPeriod == 0;
     if (this.foodContainer) {
       if (isTimeForFoodDrop) {
@@ -74,7 +85,7 @@ export class Game {
     }
   }
 
-  checkFoodsPositions() {
+  private checkFoodsPositions() {
     const foods = this.foodContainer.children;
     if (foods.length) {
       foods.every((food) => {
@@ -82,7 +93,7 @@ export class Game {
         const distanceToBottom = calculateDistance({ x: food.position.x, y: window.innerHeight }, food.position);
         if (distanceToPlayer < this.player.catchRange) {
           foods.shift();
-          this.score += 1;
+          this._score += 1;
           return true;
         } else if (distanceToBottom < 10) {
           foods.shift();
@@ -106,9 +117,9 @@ export class Game {
   }
 
   resetGameStatus() {
-    this.hp = this.settings.startHP;
-    this.score = 0;
-    this.level = 1;
+    this._hp = this.settings.startHP;
+    this._score = 0;
+    this._level = 1;
     this.settings.foodDropPeriod = DEFAULT_FOOD_DROP_PERIOD;
     this.player.position = DEFAULT_HERO_POSITION;
   }

@@ -5,12 +5,12 @@ import { Position } from "../models/Position";
 import { KeysController } from "./KeysController";
 
 export class Player extends Sprite {
-  name: string;
-  catchRange: number;
-  keysController: KeysController;
-  playerTextures: PlayerTextures;
+  private name: string;
+  private _catchRange: number;
+  private keysController: KeysController;
+  private playerTextures: PlayerTextures;
 
-  constructor(playerTextures: PlayerTextures, name: string, catchRange: number = DEFAULT_PLAYER_CATCH_RANGE, position: Position = DEFAULT_HERO_POSITION) {
+  public constructor(playerTextures: PlayerTextures, name: string, _catchRange: number = DEFAULT_PLAYER_CATCH_RANGE, position: Position = DEFAULT_HERO_POSITION) {
     super(playerTextures.front);
     this.playerTextures = playerTextures;
     this.anchor.set(0.5);
@@ -19,10 +19,14 @@ export class Player extends Sprite {
     this.keysController = new KeysController();
 
     this.name = name;
-    this.catchRange = catchRange;
+    this._catchRange = _catchRange;
   }
 
-  move(velocity: number) {
+  get catchRange() {
+    return this._catchRange;
+  }
+
+  private move(velocity: number) {
     const newXPosition = this.position.x + velocity;
     if (newXPosition < window.innerWidth - 20 && newXPosition > 20) {
       this.position.x = newXPosition;
@@ -30,13 +34,13 @@ export class Player extends Sprite {
     this.changeTexture(Math.sign(velocity));
   }
 
-  handleMove() {
+  public handleMove() {
     if ((this.keysController.leftKeyDown || this.keysController.rightKeyDown) && this.keysController.vel) {
       this.move(this.keysController.vel);
     }
   }
 
-  changeTexture(velocitySign: number) {
+  private changeTexture(velocitySign: number) {
     switch (velocitySign) {
       case 1:
         this.texture = this.playerTextures.right;
