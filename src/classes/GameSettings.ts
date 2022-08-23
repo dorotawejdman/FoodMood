@@ -11,11 +11,11 @@ export class GameSettings {
     this._startHP = startHP;
   }
 
-  public get dropsPerLevel() {
+  get dropsPerLevel() {
     return this._dropsPerLevel;
   }
 
-  public get startHP() {
+  get startHP() {
     return this._startHP;
   }
 }
