@@ -3,7 +3,7 @@ import { Food } from "./Food";
 import { calculateDistance } from "../composables/game-helpers";
 import { Player } from "./Player";
 import { GameSettings } from "./GameSettings";
-import { DEFAULT_FOOD_DROP_PERIOD, DEFAULT_HERO_POSITION } from "../composables/Constants";
+import { DEFAULT_FOOD_DROP_PERIOD, DEFAULT_HERO_POSITION, FOOD_DROP_PERIOD_STEP, MINIMUM_FOOD_DROP_PERIOD } from "../composables/Constants";
 import { PlayerTextures } from "../models/PlayerTextures";
 
 export class Game {
@@ -42,8 +42,10 @@ export class Game {
     this.stage.addChild(this.player);
   }
 
-  moveFoods() {
-    this.foodContainer.children.forEach((food: Food) => food.move());
+  decreaseFoodPeriod() {
+    if (this.settings.foodDropPeriod > MINIMUM_FOOD_DROP_PERIOD) {
+      this.settings.foodDropPeriod -= FOOD_DROP_PERIOD_STEP;
+    }
   }
 
   levelUp() {
@@ -51,16 +53,24 @@ export class Game {
     this.decreaseFoodPeriod();
   }
 
-  decreaseFoodPeriod() {
-    if (this.settings.foodDropPeriod > 60) {
-      this.settings.foodDropPeriod -= 10;
-    }
-  }
-
   removeHP() {
     this.hp -= 1;
     if (this.hp == 0) {
       this.gameOver();
+    }
+  }
+
+  moveFoods() {
+    this.foodContainer.children.forEach((food: Food) => food.move());
+  }
+
+  handleFoods(loopStepId: number) {
+    const isTimeForFoodDrop = loopStepId % this.settings.foodDropPeriod == 0;
+    if (this.foodContainer) {
+      if (isTimeForFoodDrop) {
+        this.createFood();
+      }
+      this.moveFoods();
     }
   }
 
@@ -87,26 +97,24 @@ export class Game {
 
   tick(loopStepId: number) {
     this.player.handleMove();
-
-    if (this.foodContainer) {
-      if (loopStepId % this.settings.foodDropPeriod == 0) {
-        this.createFood();
-      }
-      this.moveFoods();
-    }
-    //co 10 obiektow zwieksz level
-    if (loopStepId % (DEFAULT_FOOD_DROP_PERIOD * this.settings.dropsPerLevel) == 0) {
+    this.handleFoods(loopStepId);
+    this.checkFoodsPositions();
+    const isTimeForLevelUp = loopStepId % (DEFAULT_FOOD_DROP_PERIOD * this.settings.dropsPerLevel) == 0;
+    if (isTimeForLevelUp) {
       this.levelUp();
     }
-    this.checkFoodsPositions();
   }
 
-  gameOver() {
+  resetGameStatus() {
     this.hp = this.settings.startHP;
     this.score = 0;
     this.level = 1;
     this.settings.foodDropPeriod = DEFAULT_FOOD_DROP_PERIOD;
-    this.player.position.set(DEFAULT_HERO_POSITION.x, DEFAULT_HERO_POSITION.y);
+    this.player.position = DEFAULT_HERO_POSITION;
+  }
+
+  gameOver() {
+    this.resetGameStatus();
     console.log("Game over");
   }
 }
