@@ -12,7 +12,7 @@ export class AppManager {
   private panel: Panel;
   private loader: Loader;
 
-  public constructor() {
+  constructor() {
     this.loopStepId = 0;
     this.app = new Application({
       width: 500,
@@ -56,6 +56,6 @@ export class AppManager {
   private loop(step: number) {
     this.loopStepId += 1;
     this.game.tick(this.loopStepId);
-    this.panel.updateValues(this.game.score, this.game.hp, this.game.level);
+    this.panel.updateValues(this.game.score, this.game.hp, this.game.level, this.game.record);
   }
 }

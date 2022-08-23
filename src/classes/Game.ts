@@ -3,7 +3,7 @@ import { Food } from "./Food";
 import { calculateDistance } from "../composables/game-helpers";
 import { Player } from "./Player";
 import { GameSettings } from "./GameSettings";
-import { DEFAULT_FOOD_DROP_PERIOD, DEFAULT_HERO_POSITION, FOOD_DROP_PERIOD_STEP, MINIMUM_FOOD_DROP_PERIOD } from "../composables/Constants";
+import { DEFAULT_FOOD_DROP_PERIOD, FOOD_DROP_PERIOD_STEP, MINIMUM_FOOD_DROP_PERIOD } from "../composables/Constants";
 import { PlayerTextures } from "../models/PlayerTextures";
 
 export class Game {
@@ -15,17 +15,20 @@ export class Game {
   private foodTextures: Texture[];
   private stage: Container;
   private foodContainer: Container;
+  private _record: number;
 
   constructor(stage: Container, foodTextures: Texture[], playerTextures: PlayerTextures, settings = new GameSettings()) {
     this.settings = settings;
     this._hp = settings.startHP;
     this._level = 1;
     this._score = 0;
+    this._record = 0;
     this.stage = stage;
     this.foodTextures = foodTextures;
     this.createFoodContainer();
     this.createPlayer(playerTextures);
   }
+
   get score() {
     return this._score;
   }
@@ -36,6 +39,10 @@ export class Game {
 
   get hp() {
     return this._hp;
+  }
+
+  get record() {
+    return this._record;
   }
 
   private createFood() {
@@ -124,16 +131,25 @@ export class Game {
     isTimeForLevelUp && this.levelUp();
   }
 
-  resetGameStatus() {
+  private resetGameStatus() {
     this._hp = this.settings.startHP;
     this._score = 0;
     this._level = 1;
+    this.foodContainer.children.length = 0;
     this.settings.foodDropPeriod = DEFAULT_FOOD_DROP_PERIOD;
-    this.player.position = DEFAULT_HERO_POSITION;
+    this.player.resetPlayer();
+  }
+
+  updateRecord(score: number) {
+    if (score > this.record) {
+      this._record = score;
+    }
   }
 
   gameOver() {
-    this.resetGameStatus();
-    console.log("Game over");
+    if (confirm("Game over! Press ok to play again!")) {
+      this.updateRecord(this.score);
+      this.resetGameStatus();
+    }
   }
 }
