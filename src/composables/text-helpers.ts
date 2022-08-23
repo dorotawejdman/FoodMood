@@ -5,10 +5,9 @@ export const createText = (content: string = "", fontSize: number = 45, x: numbe
     fontFamily: "Montserrat",
     fontSize: fontSize,
     fill: 0xdddddd,
-    align: "center",
   });
   const text = new Text(content, style);
-  text.anchor.x = 0.5;
+  text.anchor.x = 1;
   text.position.x = x;
   text.position.y = y;
   return text;
