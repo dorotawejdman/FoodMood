@@ -1,5 +1,5 @@
 # FoodMood
-Simple web game where you can grab some good food if you have a right mood.
+Simple web game where you can grab some good food if you have a right mood U+1F60B
 
 Created using JS, PIXI.JS, typescript & webpack.
 
