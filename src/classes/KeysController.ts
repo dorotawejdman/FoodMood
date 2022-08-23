@@ -1,3 +1,5 @@
+import { DEFAULT_PLAYER_SPEED } from "../composables/Constants";
+
 export class KeysController {
   private speed: number;
   private _vel: number;
@@ -6,7 +8,7 @@ export class KeysController {
   private leftKeyName: string;
   private rightKeyName: string;
 
-  public constructor(speed: number = 5, leftKeyName: string = "ArrowLeft", rightKeyName: string = "ArrowRight") {
+  constructor(speed: number = DEFAULT_PLAYER_SPEED, leftKeyName: string = "ArrowLeft", rightKeyName: string = "ArrowRight") {
     this.speed = speed;
     this._vel = 0;
     this.leftKeyName = leftKeyName;
@@ -14,15 +16,15 @@ export class KeysController {
     this.addListeners();
   }
 
-  public get vel() {
+  get vel() {
     return this._vel;
   }
 
-  public get leftKeyDown() {
+  get leftKeyDown() {
     return this._leftKeyDown;
   }
 
-  public get rightKeyDown() {
+  get rightKeyDown() {
     return this._rightKeyDown;
   }
 
@@ -66,5 +68,10 @@ export class KeysController {
   private goRight() {
     this._vel = this.speed;
     this._rightKeyDown = true;
+  }
+
+  resetPressedKeys() {
+    this._leftKeyDown = false;
+    this._rightKeyDown = false;
   }
 }

@@ -10,7 +10,7 @@ export class Player extends Sprite {
   private keysController: KeysController;
   private playerTextures: PlayerTextures;
 
-  public constructor(playerTextures: PlayerTextures, name: string, _catchRange: number = DEFAULT_PLAYER_CATCH_RANGE, position: Position = DEFAULT_HERO_POSITION) {
+  constructor(playerTextures: PlayerTextures, name: string, _catchRange: number = DEFAULT_PLAYER_CATCH_RANGE, position: Position = DEFAULT_HERO_POSITION) {
     super(playerTextures.front);
     this.playerTextures = playerTextures;
     this.name = name;
@@ -32,11 +32,16 @@ export class Player extends Sprite {
     this.changeTexture(Math.sign(velocity));
   }
 
-  public handleMove() {
+  handleMove() {
     const isMoveKeyPressed = this.keysController.leftKeyDown || this.keysController.rightKeyDown;
     if (isMoveKeyPressed && this.keysController.vel) {
       this.move(this.keysController.vel);
     }
+  }
+
+  resetPlayeState() {
+    this.position = DEFAULT_HERO_POSITION;
+    this.keysController.resetPressedKeys();
   }
 
   private changeTexture(velocitySign: number) {

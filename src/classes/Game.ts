@@ -131,13 +131,13 @@ export class Game {
     isTimeForLevelUp && this.levelUp();
   }
 
-  private resetGameStatus() {
+  private resetGameState() {
     this._hp = this.settings.startHP;
     this._score = 0;
     this._level = 1;
     this.foodContainer.children.length = 0;
     this.settings.foodDropPeriod = DEFAULT_FOOD_DROP_PERIOD;
-    this.player.resetPlayer();
+    this.player.resetPlayeState();
   }
 
   updateRecord(score: number) {
@@ -149,7 +149,7 @@ export class Game {
   gameOver() {
     if (confirm("Game over! Press ok to play again!")) {
       this.updateRecord(this.score);
-      this.resetGameStatus();
+      this.resetGameState();
     }
   }
 }
