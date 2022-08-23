@@ -103,24 +103,6 @@ export class Game {
         break;
       }
     }
-
-    if (foods.length) {
-      foods.every((food) => {
-        const distanceToPlayer = calculateDistance(this.player.position, food.position);
-        const distanceToBottom = calculateDistance({ x: food.position.x, y: window.innerHeight }, food.position);
-        if (distanceToPlayer < this.player.catchRange) {
-          foods.shift();
-          this._score += 1;
-          return true;
-        } else if (distanceToBottom < 10) {
-          foods.shift();
-          this.removeHP();
-          return true;
-        } else {
-          return false;
-        }
-      });
-    }
   }
 
   tick(loopStepId: number) {

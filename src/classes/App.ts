@@ -51,8 +51,6 @@ export class AppManager {
     });
   }
 
-  private startGame() {}
-
   private loop(step: number) {
     this.loopStepId += 1;
     this.game.tick(this.loopStepId);
