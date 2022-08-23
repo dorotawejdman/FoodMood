@@ -66,9 +66,7 @@ export class Game {
 
   private removeHP() {
     this._hp -= 1;
-    if (this.hp == 0) {
-      this.gameOver();
-    }
+    this.hp == 0 && this.gameOver();
   }
 
   private moveFoods() {
@@ -78,15 +76,27 @@ export class Game {
   private handleFoods(loopStepId: number) {
     const isTimeForFoodDrop = loopStepId % this.settings.foodDropPeriod == 0;
     if (this.foodContainer) {
-      if (isTimeForFoodDrop) {
-        this.createFood();
-      }
+      isTimeForFoodDrop && this.createFood();
       this.moveFoods();
     }
   }
 
   private checkFoodsPositions() {
     const foods = this.foodContainer.children;
+    for (let i = 0; i < foods.length; i++) {
+      const distanceToPlayer = calculateDistance(this.player.position, foods[i].position);
+      const distanceToBottom = calculateDistance({ x: foods[i].position.x, y: window.innerHeight }, foods[i].position);
+      if (distanceToPlayer < this.player.catchRange) {
+        foods.shift();
+        this._score += 1;
+      } else if (distanceToBottom < 10) {
+        foods.shift();
+        this.removeHP();
+      } else {
+        break;
+      }
+    }
+
     if (foods.length) {
       foods.every((food) => {
         const distanceToPlayer = calculateDistance(this.player.position, food.position);
@@ -111,9 +121,7 @@ export class Game {
     this.handleFoods(loopStepId);
     this.checkFoodsPositions();
     const isTimeForLevelUp = loopStepId % (DEFAULT_FOOD_DROP_PERIOD * this.settings.dropsPerLevel) == 0;
-    if (isTimeForLevelUp) {
-      this.levelUp();
-    }
+    isTimeForLevelUp && this.levelUp();
   }
 
   resetGameStatus() {

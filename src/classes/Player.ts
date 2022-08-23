@@ -13,13 +13,11 @@ export class Player extends Sprite {
   public constructor(playerTextures: PlayerTextures, name: string, _catchRange: number = DEFAULT_PLAYER_CATCH_RANGE, position: Position = DEFAULT_HERO_POSITION) {
     super(playerTextures.front);
     this.playerTextures = playerTextures;
-    this.anchor.set(0.5);
-    this.position.set(position.x, position.y);
-
-    this.keysController = new KeysController();
-
     this.name = name;
     this._catchRange = _catchRange;
+    this.position.set(position.x, position.y);
+    this.anchor.set(0.5);
+    this.keysController = new KeysController();
   }
 
   get catchRange() {
@@ -35,7 +33,8 @@ export class Player extends Sprite {
   }
 
   public handleMove() {
-    if ((this.keysController.leftKeyDown || this.keysController.rightKeyDown) && this.keysController.vel) {
+    const isMoveKeyPressed = this.keysController.leftKeyDown || this.keysController.rightKeyDown;
+    if (isMoveKeyPressed && this.keysController.vel) {
       this.move(this.keysController.vel);
     }
   }
