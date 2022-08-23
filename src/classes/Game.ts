@@ -25,7 +25,6 @@ export class Game {
     this.foodTextures = foodTextures;
     this.createFoodContainer();
     this.createPlayer(playerTextures);
-    this.createFood();
   }
 
   createFood() {
@@ -66,17 +65,23 @@ export class Game {
   }
 
   checkFoodsPositions() {
-    const firstFood = this.foodContainer.children[0];
-    if (firstFood) {
-      const distanceToPlayer = calculateDistance(this.player.position, firstFood.position);
-      const distanceToBottom = calculateDistance({ x: firstFood.position.x, y: window.innerHeight }, firstFood.position);
-      if (distanceToPlayer < this.player.catchRange) {
-        this.foodContainer.children.shift();
-        this.score += 1;
-      } else if (distanceToBottom < this.player.catchRange) {
-        this.foodContainer.children.shift();
-        this.removeHP();
-      }
+    const foods = this.foodContainer.children;
+    if (foods.length) {
+      foods.every((food) => {
+        const distanceToPlayer = calculateDistance(this.player.position, food.position);
+        const distanceToBottom = calculateDistance({ x: food.position.x, y: window.innerHeight }, food.position);
+        if (distanceToPlayer < this.player.catchRange) {
+          foods.shift();
+          this.score += 1;
+          return true;
+        } else if (distanceToBottom < 10) {
+          foods.shift();
+          this.removeHP();
+          return true;
+        } else {
+          return false;
+        }
+      });
     }
   }
 
