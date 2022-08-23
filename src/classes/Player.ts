@@ -42,12 +42,16 @@ export class Player extends Sprite {
   resetPlayeState() {
     this.position = DEFAULT_HERO_POSITION;
     this.keysController.resetPressedKeys();
+    this.changeTexture(0);
   }
 
   private changeTexture(velocitySign: number) {
     switch (velocitySign) {
       case 1:
         this.texture = this.playerTextures.right;
+        break;
+      case 0:
+        this.texture = this.playerTextures.front;
         break;
       case -1:
         this.texture = this.playerTextures.left;
